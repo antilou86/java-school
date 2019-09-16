@@ -2,6 +2,8 @@ package com.lambdaschool.school.model;
 
 import com.lambdaschool.school.exceptions.ValidationError;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,8 +42,8 @@ public class ErrorDetails {
         return timestamp;
     }
 
-    public void setTimestamp(String timestamp) {
-        this.timestamp = timestamp;
+    public void setTimestamp(Long timestamp) {
+        this.timestamp = new SimpleDateFormat("dd MMM yyyy HH:mm:ss:SSS Z").format(new Date(timestamp));
     }
 
     public String getDeveloperMessage() {
