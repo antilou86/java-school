@@ -69,7 +69,9 @@ public class StudentController
     }
 
 
-    @PutMapping(value = "/Student/{Studentid}")
+    @PutMapping(value = "/Student/{Studentid}",
+            consumes = {"application/json"},
+            produces = {"application/json"})
     public ResponseEntity<?> updateStudent(
             @RequestBody
                     Student updateStudent,
@@ -81,7 +83,9 @@ public class StudentController
     }
 
 
-    @DeleteMapping("/Student/{Studentid}")
+    @DeleteMapping(value = "/Student/{Studentid}",
+            consumes = {"application/json"},
+            produces = {"application/json"})
     public ResponseEntity<?> deleteStudentById(
             @PathVariable
                     long Studentid)
