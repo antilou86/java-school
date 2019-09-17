@@ -1,7 +1,9 @@
 package com.lambdaschool.school.controller;
 
+import com.lambdaschool.school.model.ErrorDetails;
 import com.lambdaschool.school.model.Student;
 import com.lambdaschool.school.service.StudentService;
+import io.swagger.annotations.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +35,15 @@ public class StudentController
         logger.info(req.getMethod() + " " + req.getRequestURI() + " Accessed");
     }
     // /?sort=name,desc&sort=id,asc&page=0&size=5
-    @GetMapping(value = "/students", produces = {"application/json"})
+    @ApiOperation(value="return all students using paging and sorting", response = Student.class, responseContainer = "List")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name= "page", dataType = "interger", paramType = "query", value = "results page you want to retrieve"),
+            @ApiImplicitParam(name = "size", dataType = "interger", paramType = "query", value = "number of records per page"),
+            @ApiImplicitParam(name = "sort", allowMultiple = true, dataType = "string", paramType = "query", value = "Sorting criteria in the format: property(,asc|desc). multiple sort criteria are supported.")
+    })
+
+    @GetMapping(value = "" +
+            "/students", produces = {"application/json"})
     public ResponseEntity<?> listAllStudents(@PageableDefault(page=0, size=5) Pageable pageable, HttpServletRequest req)
     {
         Log(req);
@@ -47,10 +57,15 @@ public class StudentController
         List<Student> allStudents = studentService.findAll(Pageable.unpaged());
         return new ResponseEntity<>(allStudents, HttpStatus.OK);
     }
-
+    @ApiOperation(value = "Retrieve student by student ID.", response = Student.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "student found", response = Student.class),
+            @ApiResponse(code = 404, message = "student not found", response = ErrorDetails.class)
+    })
     @GetMapping(value = "/Student/{StudentId}",
                 produces = {"application/json"})
     public ResponseEntity<?> getStudentById(
+            @ApiParam(value = "student id", required = true, example = "1")
             @PathVariable
                     Long StudentId,
                     HttpServletRequest req)
@@ -72,7 +87,11 @@ public class StudentController
         return new ResponseEntity<>(myStudents, HttpStatus.OK);
     }
 
-
+    @ApiOperation(value = "post a new student", notes = "the newly created student will be sent in the location header", response = void.class)
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "student added", response = void.class),
+            @ApiResponse(code = 500, message = "issue adding student, check your post syntax", response = ErrorDetails.class)
+    })
     @PostMapping(value = "/Student",
                  consumes = {"application/json"},
                  produces = {"application/json"})
@@ -99,6 +118,7 @@ public class StudentController
     public ResponseEntity<?> updateStudent(
             @RequestBody
                     Student updateStudent,
+            @ApiParam(value = "student id", required = true, example = "1")
             @PathVariable
                     long Studentid,
             HttpServletRequest req)
