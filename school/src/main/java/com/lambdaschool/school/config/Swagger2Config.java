@@ -25,8 +25,8 @@ public class Swagger2Config {
     }
 
     private ApiInfo apiEndPointsInfo(){
-        return new ApiInfoBuilder().title("")
-                .description("")
+        return new ApiInfoBuilder().title("Swagger school example")
+                .description("Swagger school example")
                 .contact(new Contact("Luis Guzman", "http://www.github.com/antilou86", "antilou86@gmail.com"))
                 .license("MIT").licenseUrl("https://github.com/LambdaSchool/or-whatever/master/license")
                 .version("1.0.0").build();
