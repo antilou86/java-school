@@ -1,0 +1,29 @@
+// Login and get access token
+curl -X POST --user "lambda-client:lambda-secret" -d "grant_type=password&username=admin&password=password" http://antilou86-school.herokuapp.com/oauth/token
+
+// Get all students
+curl -X GET -H "Authorization: Bearer e5801ebc-cd08-4d62-99d5-73ddefbbf3c6" https://antilou86-school.herokuapp.com/students/students
+
+// Get specific student
+curl -X GET -H "Authorization: Bearer e5801ebc-cd08-4d62-99d5-73ddefbbf3c6" https://antilou86-school.herokuapp.com/students/student/3
+
+// Get students with names containing whatever char
+curl -X GET -H "Authorization: Bearer e5801ebc-cd08-4d62-99d5-73ddefbbf3c6" https://antilou86-school.herokuapp.com/students/student/namelike/a
+
+// Create new student
+curl -X POST -H "Content-Type: application/json" -H "Authorization: Bearer e5801ebc-cd08-4d62-99d5-73ddefbbf3c6" -d "{\"studname\": \"Lou\"}" https://antilou86-school.herokuapp.com/students/student
+
+// Update student info by id
+curl -X PUT -H "Content-Type: application/json" -H "Authorization: Bearer e5801ebc-cd08-4d62-99d5-73ddefbbf3c6" -d "{\"studname\": \"idk\"}" https://antilou86-school.herokuapp.com/students/student/3
+
+// Delete a student by id
+curl -X DELETE -H "Authorization: Bearer e5801ebc-cd08-4d62-99d5-73ddefbbf3c6" https://antilou86-school.herokuapp.com/students/student/3
+
+// Get all courses
+curl -X GET -H "Authorization: Bearer e5801ebc-cd08-4d62-99d5-73ddefbbf3c6" https://antilou86-school.herokuapp.com/courses/courses
+
+// Get courses with number of students in each course
+curl -X GET -H "Authorization: Bearer e5801ebc-cd08-4d62-99d5-73ddefbbf3c6" https://antilou86-school.herokuapp.com/courses/studcount
+
+// Delete a course by id
+curl -X DELETE -H "Authorization: Bearer e5801ebc-cd08-4d62-99d5-73ddefbbf3c6" https://antilou86-school.herokuapp.com/courses/courses/6
