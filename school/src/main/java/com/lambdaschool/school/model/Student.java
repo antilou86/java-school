@@ -28,6 +28,7 @@ public class Student
                joinColumns = {@JoinColumn(name = "studid")},
                inverseJoinColumns = {@JoinColumn(name = "courseid")})
     @JsonIgnoreProperties("students")
+
     @ApiModelProperty(name = "course list", value="list of courses for this student", example = "[]")
     private List<Course> courses = new ArrayList<>();
 
